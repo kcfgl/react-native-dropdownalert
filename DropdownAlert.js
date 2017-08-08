@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {StyleSheet, View, Text, TouchableHighlight, Animated, StatusBar, Platform, Dimensions, Image, PanResponder} from "react-native"
 import PropTypes from 'prop-types';
+import EvilIcon from 'react-native-vector-icons/EvilIcons';
 
 const StatusBarDefaultBarStyle = StatusBar._defaultProps.barStyle.value
 const StatusBarDefaultBackgroundColor = StatusBar._defaultProps.backgroundColor.value
@@ -34,6 +35,10 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: PropTypes.number,
     messageNumOfLines: PropTypes.number,
     onClose: PropTypes.func,
+    successIcon: PropTypes.string,
+    errorIcon: PropTypes.string,
+    warnIcon: PropTypes.string,
+    infoIcon: PropTypes.string,
     onCancel: PropTypes.func,
     showCancel: PropTypes.bool,
     tapToCloseEnabled: PropTypes.bool,
@@ -55,6 +60,10 @@ export default class DropdownAlert extends Component {
     titleNumOfLines: 1,
     messageNumOfLines: 3,
     imageSrc: null,
+    successIcon: 'check',
+    errorIcon: 'exclamation',
+    warnIcon: 'exclamation',
+    infoIcon: 'question',
     cancelBtnImageSrc: require('./assets/cancel.png'),
     infoColor: '#2B73B6',
     warnColor: '#cd853f',
@@ -222,7 +231,7 @@ export default class DropdownAlert extends Component {
               StatusBar.setBackgroundColor(this.props.inactiveStatusBarBackgroundColor, true)
             } else {
               StatusBar.setBarStyle(this.props.inactiveStatusBarStyle, true)
-            }                        
+            }
           }
           if (onDismiss) {
             var data = {
@@ -345,6 +354,14 @@ export default class DropdownAlert extends Component {
     }
     return null
   }
+  renderIcon(source, style) {
+    if (source != null) {
+      return (
+        <EvilIcon size={ 36 } name={ source } color={ 'white' } style={style}/>
+      )
+    }
+    return null
+  }
   renderStatusBar(backgroundColor, barStyle, translucent) {
     if (Platform.OS === 'android') {
       StatusBar.setBackgroundColor(backgroundColor, true)
@@ -371,22 +388,22 @@ export default class DropdownAlert extends Component {
       switch (this.state.type) {
         case 'info':
           style = [styles.defaultContainer, {backgroundColor: this.props.infoColor}]
-          source = require('./assets/info.png')
+          source = this.props.infoIcon
           backgroundColor = this.props.infoColor
           break;
         case 'warn':
           style = [styles.defaultContainer, {backgroundColor: this.props.warnColor}]
-          source = require('./assets/warn.png')
+          source = this.props.warnIcon
           backgroundColor = this.props.warnColor
           break;
         case 'error':
           style = [styles.defaultContainer, {backgroundColor: this.props.errorColor}]
-          source = require('./assets/error.png')
+          source = this.props.errorIcon
           backgroundColor = this.props.errorColor
           break;
         case 'success':
           style = [styles.defaultContainer, {backgroundColor: this.props.successColor}]
-          source = require('./assets/success.png')
+          source = this.props.successIcon
           backgroundColor = this.props.successColor
           break;
       }
