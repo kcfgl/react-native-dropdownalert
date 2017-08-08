@@ -357,7 +357,7 @@ export default class DropdownAlert extends Component {
   renderIcon(source, style) {
     if (source != null) {
       return (
-        <EvilIcon size={ 36 } name={ source } color={ 'white' } style={style}/>
+        <EvilIcon size={ 42 } name={ source } color={ 'white' } style={{alignSelf: 'center'}}/>
       )
     }
     return null
@@ -374,7 +374,7 @@ export default class DropdownAlert extends Component {
     if (source != null && isRendered) {
       return (
         <TouchableHighlight style={{alignSelf: style.alignSelf, width: style.width, height: style.height}} onPress={onPress} underlayColor={underlayColor}>
-          {this.renderImage(source, style)}
+          {this.renderIcon(source, style)}
         </TouchableHighlight>
       )
     }
@@ -383,7 +383,7 @@ export default class DropdownAlert extends Component {
   renderDropDown(isOpen) {
     if (isOpen == true) {
       var style = [styles.defaultContainer, StyleSheet.flatten(this.props.containerStyle)]
-      var source = this.props.imageSrc
+      var source = this.props.successIcon
       var backgroundColor = this.props.containerStyle.backgroundColor
       switch (this.state.type) {
         case 'info':
@@ -441,7 +441,7 @@ export default class DropdownAlert extends Component {
                 disabled={!this.props.tapToCloseEnabled}
                 onLayout={(event) => this.onLayoutEvent(event)}>
               <View style={style}>
-                {this.renderImage(source, StyleSheet.flatten(this.props.imageStyle))}
+                {this.renderIcon(source, StyleSheet.flatten(this.props.imageStyle))}
                 <View style={styles.textContainer}>
                   {this.renderText(this.state.title, StyleSheet.flatten(this.props.titleStyle), this.props.titleNumOfLines)}
                   {this.renderText(this.state.message, StyleSheet.flatten(this.props.messageStyle), this.props.messageNumOfLines)}
